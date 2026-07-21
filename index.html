@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Sanktionen gegen Josef – Countdown</title>
+<style>
+  body {
+    background: #111;
+    color: #f5f5f5;
+    font-family: -apple-system, Arial, sans-serif;
+    text-align: center;
+    padding-top: 8vh;
+  }
+  h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+  p.sub { color: #aaa; margin-bottom: 3rem; }
+  #countdown {
+    font-size: 3.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #ff4d4d;
+  }
+  .expired { color: #ffcc00 !important; }
+  .unit { font-size: 1rem; color: #888; display:block; margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<h1>⚠️ Sanktionen gegen Josef treten in Kraft in:</h1>
+<p class="sub">Sofern bis dahin keine Aufgabe im Chat "IT-Stammtisch" gepostet wird.</p>
+
+<div id="countdown">Lädt...</div>
+
+<script>
+  // Zieldatum anpassen (Format: Jahr, Monat-1, Tag, Stunde, Minute)
+  const deadline = new Date(2026, 7, 23, 15, 0, 0).getTime(); 
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = deadline - now;
+    const el = document.getElementById("countdown");
+
+    if (distance <= 0) {
+      el.innerHTML = "🚨 Sanktionen sind aktiv! 🚨";
+      el.classList.add("expired");
+      clearInterval(timer);
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    el.innerHTML = `${days}<span class="unit">Tage</span>` +
+                    `&nbsp;&nbsp;${hours}<span class="unit">Std</span>` +
+                    `&nbsp;&nbsp;${minutes}<span class="unit">Min</span>` +
+                    `&nbsp;&nbsp;${seconds}<span class="unit">Sek</span>`;
+  }
+
+  updateCountdown();
+  const timer = setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
